@@ -1,5 +1,5 @@
 # Analysis
-This section identifies distinct weather patterns using k-means clustering of the data collected from a weather station in San Diego, CA . First, we determine the optimal number of clusters using an elbow plot.  Then we find cluster centers for the optimal number of clusters to identify weather patterns corresponding to each cluster.
+This section identifies distinct weather patterns using k-means clustering in the data collected from a weather station in San Diego, CA . First, we determine the optimal number of clusters using an elbow plot.  Then we find cluster centers for the optimal number of clusters to identify weather patterns corresponding to each cluster.
 
 The [previous section](https://eagronin.github.io/weather-clustering-spark-prepare/) explores, cleans and scales the data to prepare it for the clustering analysis.
 
