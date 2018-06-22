@@ -1,9 +1,14 @@
 # Analysis
+
+## Overview
+
 This section identifies distinct weather patterns using k-means clustering in the data collected from a weather station in San Diego, CA . First, we determine the optimal number of clusters using an elbow plot.  Then we find cluster centers for the optimal number of clusters to identify weather patterns corresponding to each cluster.
 
-The [previous section](https://eagronin.github.io/weather-clustering-spark-prepare/) explores, cleans and scales the data to prepare it for the clustering analysis.
+The [previous section](https://eagronin.github.io/weather-clustering-spark-prepare/) explores, cleans and scales the data to prepare them for the clustering analysis.
 
 The [next section](https://eagronin.github.io/weather-clustering-spark-report/) reports and interprets the results.
+
+## K-Means Clustering
 
 The k-means algorithm requires that the number of clusters (k) has to be specified. To determine a good value for k, we will use the “elbow” method. This method applies k-means using different values for k and calculating the within-cluster sum-of-squared error (WSSE).  This process can be compute-intensive, because k-means is applied multiple times. Therefore, for creating the elbow plot we use only a subset of the dataset. Specifically, we keep every third row from the dataset and drop all the other rows:
 
@@ -69,7 +74,7 @@ def elbow_plot(wsseList, clusters):
 	wsseDF.plot(y='WSSE', x='k', figsize=(15,10), grid=True, marker='o')
 ```
 
-The following function converts cluster centers determined by the the k-means algorithm to a pandas dataframe in order to plot cluster centers in matplotlib (Spark dataframes cannot be plotted using matplotlib): 
+The next function converts cluster centers determined by the the k-means algorithm to a pandas dataframe in order to plot cluster centers in matplotlib (Spark dataframes cannot be plotted using matplotlib): 
 
 ```python
 def pd_centers(featuresUsed, centers):
@@ -94,7 +99,7 @@ def parallel_plot(data, P):
 	parallel_coordinates(data, 'prediction', color = my_colors, marker='o')
 ```    
   
-The code in the remainder of this section calls the functions above to create the elbow plot and fit the k-means algorithm for the chosen number of clusters.  
+The code in the remainder of this section calls the functions above to create an elbow plot and fit the k-means algorithm for the chosen number of clusters.  
 
 The following code calculates WSSE for each number of clusters ranging from 2 to 30:
 
@@ -103,7 +108,7 @@ clusters = range(2, 31)
 wsseList = elbow(elbowset, clusters)
 ```
 
-This code generates the following output, which is going to be used as input into the function that create elbow plot:
+This code generates the following output, which is going to be used as input into the function that creates an elbow plot:
 
 ```
 Training for cluster size 2 
@@ -183,7 +188,7 @@ transformed = model.transform(scaledDataFeat)
 transformed.head(10)
 ```
 
-The code above results in a dataset that contains in each row a point in the feature sapce as the first column and the cluster ID to which this point belongs as the second column:
+The code above results in a dataset, in which each row is comprised of a point in the feature sapce and the cluster ID to which this point belongs:
 
 ```
 [Row(features=DenseVector([-1.4846, 0.2454, -0.6839, -0.7656, -0.6215, -0.7444, 0.4923]), prediction=2),
