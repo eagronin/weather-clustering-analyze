@@ -8,7 +8,7 @@ The [previous section](https://eagronin.github.io/weather-clustering-spark-prepa
 
 The [next section](https://eagronin.github.io/weather-clustering-spark-report/) reports and interprets the results.
 
-This project is based on assignments from Machine Learning With Big Data by University of California San Diego on Coursera
+This project is based on assignments from Machine Learning With Big Data by University of California San Diego on Coursera.
 
 The analysis for this project was performed in Spark.
 
