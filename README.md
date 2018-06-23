@@ -8,6 +8,10 @@ The [previous section](https://eagronin.github.io/weather-clustering-spark-prepa
 
 The [next section](https://eagronin.github.io/weather-clustering-spark-report/) reports and interprets the results.
 
+This project is based on assignments from Machine Learning With Big Data by University of California San Diego on Coursera
+
+The analysis for this project was performed in Spark.
+
 ## K-Means Clustering
 
 The k-means algorithm requires that the number of clusters (k) has to be specified. To determine a good value for k, we will use the “elbow” method. This method applies k-means using different values for k and calculating the within-cluster sum-of-squared error (WSSE).  This process can be compute-intensive, because k-means is applied multiple times. Therefore, for creating the elbow plot we use only a subset of the dataset. Specifically, we keep every third row from the dataset and drop all the other rows:
