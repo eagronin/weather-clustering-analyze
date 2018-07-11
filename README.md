@@ -14,7 +14,7 @@ The analysis for this project was performed in Spark.
 
 ## K-Means Clustering
 
-The k-means algorithm requires that the number of clusters (k) has to be specified. To determine a good value for k, we will use the “elbow” method. This method applies k-means using different values for k and calculating the within-cluster sum-of-squared error (WSSE).  This process can be compute-intensive, because k-means is applied multiple times. Therefore, for creating the elbow plot we use only a subset of the dataset. Specifically, we keep every third row from the dataset and drop all the other rows:
+The k-means algorithm requires that the number of clusters (k) has to be specified. To determine a good value for k, we will use the “elbow” method. This method applies k-means using different values for k and calculating the within-cluster sum-of-squared error (WSSE).  This process can be compute-intensive because k-means is applied multiple times. Therefore, for creating the elbow plot we use only a subset of the dataset. Specifically, we keep every third row from the dataset and drop all the other rows:
 
 ```python
 from itertools import cycle, islice
@@ -78,7 +78,7 @@ def elbow_plot(wsseList, clusters):
 	wsseDF.plot(y='WSSE', x='k', figsize=(15,10), grid=True, marker='o')
 ```
 
-The next function converts cluster centers determined by the the k-means algorithm to a pandas dataframe in order to plot cluster centers in matplotlib (Spark dataframes cannot be plotted using matplotlib): 
+The next function converts cluster centers determined by the k-means algorithm to a pandas data frame in order to plot cluster centers in matplotlib (Spark data frames cannot be plotted using matplotlib): 
 
 ```python
 def pd_centers(featuresUsed, centers):
@@ -179,7 +179,7 @@ By calling `elbow_plot(wsseList, clusters)` we create an elbowplot, which is pre
 
 As we will discuss in the [next section](https://eagronin.github.io/weather-clustering-spark-report/), we choose the number of clusters to be 12 based on the elbow plot.
 
-Once we have chosen the number of clusters using a scaled down version of the dataset, we will go back to the `scaledData` dataset to fit the k-means algorithm for 12 clusters using that dataset.  We again choose the persist() method to keep the datasest in memory for faster processing:
+Once we have chosen the number of clusters using a scaled down version of the dataset, we will go back to the `scaledData` dataset to fit the k-means algorithm for 12 clusters using that dataset.  We again choose the persist() method to keep the dataset in memory for faster processing:
 
 ```python
 scaledDataFeat = scaledData.select('features')
@@ -192,7 +192,7 @@ transformed = model.transform(scaledDataFeat)
 transformed.head(10)
 ```
 
-The code above results in a dataset, in which each row is comprised of a point in the feature sapce and the cluster ID to which this point belongs:
+The code above results in a dataset, in which each row is comprised of a point in the feature space and the cluster ID to which this point belongs:
 
 ```
 [Row(features=DenseVector([-1.4846, 0.2454, -0.6839, -0.7656, -0.6215, -0.7444, 0.4923]), prediction=2),
@@ -234,7 +234,7 @@ These cluster centers are shown below:
 
 It is difficult to compare the cluster centers by just looking at these numbers. Therefore, we will visualize these numbers using parallel coordinates plots, which are used to visualize multi-dimensional data.  Each line plots the centroid of a cluster, and all of the features are plotted together on the same chart. Because the feature values were scaled to have mean = 0 and standard deviation = 1, the values on the y-axis of these parallel coordinates plots show the number of standard deviations from the mean.
 
-The plots are created with matplotlib using a Pandas DataFrame.  Each row in the dataframe contains the cluster center coordinates and cluster label. We use the `pd_centers()` function described above to create the Pandas DataFrame:
+The plots are created with matplotlib using a Pandas DataFrame.  Each row in the data frame contains the cluster center coordinates and cluster label. We use the `pd_centers()` function described above to create the Pandas DataFrame:
  
 ```python
 P = pd_centers(featuresUsed, centers)
